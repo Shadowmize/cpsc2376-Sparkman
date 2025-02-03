@@ -1,20 +1,119 @@
-// practice02.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+// used chatgpt to make the menu and then used it to make the skeleton of the switch statment
+
 
 #include <iostream>
+#include <fstream>
+#include <iomanip>
 
-int main()
-{
-    std::cout << "Hello World!\n";
+using namespace std;
+
+const string FILE_NAME = "account_balance.txt";
+
+
+double readBalanceFromFile();
+void writeBalanceToFile(double balance);
+void checkBalance(double balance);
+void deposit(double& balance);
+void withdraw(double& balance);
+
+int main() {
+    double balance = readBalanceFromFile();
+
+    cout << "Hey, welcome to your bank!" << endl;
+
+    int choice;
+    do {
+
+        cout << "\nWhat do you wanna do?" << endl;
+        cout << "1. Check Balance" << endl;
+        cout << "2. Deposit Money" << endl;
+        cout << "3. Withdraw Money" << endl;
+        cout << "4. Exit" << endl;
+        cout << "Pick an option: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            checkBalance(balance);
+            break;
+        case 2:
+            deposit(balance);
+            break;
+        case 3:
+            withdraw(balance);
+            break;
+        case 4:
+            cout << "Later!" << endl;
+            break;
+        default:
+            cout << "Uh, try again?" << endl;
+        }
+    } while (choice != 4);
+
+    return 0;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+double readBalanceFromFile() {
+    ifstream file(FILE_NAME);
+    double balance;
+    if (file) {
+        file >> balance;
+        file.close();
+    }
+    else {
+
+        cout << "Oops, no account found. Starting with $100." << endl;
+        balance = 100.00;
+        writeBalanceToFile(balance);
+    }
+    return balance;
+}
+
+
+void writeBalanceToFile(double balance) {
+    ofstream file(FILE_NAME);
+    if (!file) {
+        cerr << "Yikes! Can't open file." << endl;
+        exit(1);
+    }
+    file << fixed << setprecision(2) << balance;
+    file.close();
+}
+
+
+void checkBalance(double balance) {
+    cout << "You got: $" << fixed << setprecision(2) << balance << endl;
+}
+
+
+void deposit(double& balance) {
+    double amount;
+    cout << "How much you wanna put in? ";
+    cin >> amount;
+    if (amount <= 0) {
+        cout << "Dude, you gotta put a positive number." << endl;
+        return;
+    }
+    balance += amount;
+    writeBalanceToFile(balance);
+    cout << "Sweet! New balance: $" << fixed << setprecision(2) << balance << endl;
+}
+
+
+void withdraw(double& balance) {
+    double amount;
+    cout << "How much you wanna take out? ";
+    cin >> amount;
+    if (amount <= 0) {
+        cout << "C'mon, needs to be positive." << endl;
+        return;
+    }
+    if (amount > balance) {
+        cout << "Not enough cash! You only got $" << fixed << setprecision(2) << balance << endl;
+        return;
+    }
+    balance -= amount;
+    writeBalanceToFile(balance);
+    cout << "Got it! New balance: $" << fixed << setprecision(2) << balance << endl;
+}
