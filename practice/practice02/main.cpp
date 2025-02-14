@@ -32,6 +32,13 @@ int main() {
         cout << "Pick an option: ";
         cin >> choice;
 
+        if (cin.fail()) {
+            cin.clear(); 
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+            cout << "Invalid input! Please enter a number." << endl;
+            continue;
+        }
+
         switch (choice) {
         case 1:
             checkBalance(balance);
@@ -61,7 +68,7 @@ double readBalanceFromFile() {
         file >> balance;
         file.close();
     }
-    else {
+    else   {
 
         cout << "Oops, no account found. Starting with $100." << endl;
         balance = 100.00;
