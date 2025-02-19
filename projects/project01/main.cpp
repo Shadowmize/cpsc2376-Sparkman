@@ -108,7 +108,7 @@ int main() {
         
         int x, y;
         if (!parseInput(input, x, y)) {
-            std::cout << "Oops! Try again with the correct format.\n";
+            std::cout << "Try again with the right format.\n";
             continue;
         }
         
@@ -116,7 +116,7 @@ int main() {
         
         if (game.gameStatus() == WIN) {
             game.printBoard();
-            std::cout << "Congrats! You turned off all the lights!\n";
+            std::cout << "You Win!\n";
             break;
         }
     }
