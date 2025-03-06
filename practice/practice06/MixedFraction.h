@@ -9,7 +9,7 @@ private:
     int wholePart;
 
 public:
-    MixedFraction(int whole = 0, int num = 0, int denom = 1);  // Constructor declaration with default arguments
+    MixedFraction(int whole = 0, int num = 0, int denom = 1);  
     void setWholePart(int whole);
     int getWholePart() const;
     void display() const;

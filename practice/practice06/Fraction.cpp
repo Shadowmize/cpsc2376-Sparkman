@@ -1,7 +1,7 @@
 #include "Fraction.h"
 #include <iostream>
 #include <stdexcept>
-#include <cmath>  // For abs()
+#include <cmath>  
 
 Fraction::Fraction(int n, int d) : num(n), denom(d) {
     if (denom == 0) throw std::invalid_argument("Denominator cannot be zero");
@@ -28,7 +28,7 @@ void Fraction::simplify() {
     num /= gcd;
     denom /= gcd;
 
-    if (denom < 0) {  // Ensure denominator is positive
+    if (denom < 0) {  
         num = -num;
         denom = -denom;
     }
