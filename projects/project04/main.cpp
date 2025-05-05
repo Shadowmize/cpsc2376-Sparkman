@@ -27,7 +27,7 @@ int main() {
             if (e.type == SDL_QUIT) running = false;
             else if (e.type == SDL_KEYDOWN) {
                 if (e.key.keysym.sym == SDLK_ESCAPE) running = false;
-                if (e.key.keysym.sym == SDLK_r) game = Game(font);  // support replay
+                if (e.key.keysym.sym == SDLK_r) game = Game(font);  
             }
             else if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
                 int x = e.button.x;
